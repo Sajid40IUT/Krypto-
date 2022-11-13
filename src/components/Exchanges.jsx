@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AiFillPlayCircle } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { Select, Col, Avatar } from 'antd';
 import icon from '../images/cryptocurrency.png';
 import { useGetCryptosQuery } from '../services/cryptoApi';
-import { LoaderE } from ".";
+import LoaderE from "./LoaderE";
+import "./table.css"
+import datar from "./mock-data.json"
 
 const companyCommonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
@@ -25,6 +27,8 @@ const Exchanges = ({ simplified }) => {
   const handleSubmit = () => {
     
   }
+
+  const [contacts, setcontacts] = useState(datar);
 
   const { data } = useGetCryptosQuery(100);
 
@@ -64,7 +68,7 @@ const Exchanges = ({ simplified }) => {
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center">
                     <Avatar src={icon} size="large" />
-                </div>
+                </div>  
                 <BsInfoCircle fontSize={17} color="#fff" />
               </div>
               <div>
@@ -77,6 +81,27 @@ const Exchanges = ({ simplified }) => {
               </div>
             </div>
           </div>
+
+          <div className="app-container sm:rounded-tr-2xl" >
+            <table>
+              <thead>
+                <tr>
+                  <th>CryptoCurrency</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {contacts.map((contact) => (
+                  <tr>
+                    <td>{contact.CryptoCurrency}</td>
+                    <td>{contact.Amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
           <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
           <Input className="text-white" placeholder="Address To" name="addressTo" type="text" handleChange={() => {}} />
           {!simplified && (
